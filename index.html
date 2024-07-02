@@ -69,7 +69,7 @@
       }
     </style>
   </head>
-
+  <script src="https://unpkg.com/@tonconnect/ui@latest/dist/tonconnect-ui.min.js"></script>
   <body>
     <main>
       <div align="center">
@@ -110,8 +110,9 @@
       <h1>Buttons</h1>
       <button onclick="Telegram.WebApp.expand();">Expand Webview</button>
       <button onclick="toggleMainButton();">Toggle Main Button</button>
+      <button onclick="sendTransaction();">Send Transaction</button>
     </main>
-    <div id="ton-connect">connect</div>
+    <div id="ton-connect"></div>
     <div id="viewport"></div>
     <div id="viewport-params-size"></div>
     <div id="viewport-params-expand"></div>
@@ -122,20 +123,22 @@
           "https://mors6960.github.io/telegrambot/tonconnect-manifest.json",
         buttonRootId: "ton-connect",
       });
+      console.log("tonConnectUI", tonConnectUI);
     </script>
     <script>
       async function connectToWallet() {
         const connectedWallet = await tonConnectUI.connectWallet();
         // Do something with connectedWallet if needed
-        console.log(connectedWallet);
+        console.log(connectedWallet, "asdfasdf");
       }
-    //   tonConnectUI.uiOptions = {
-    //     twaReturnUrl: "https://t.me/newwww11wbot/newwww111.",
-    //   };
+      tonConnectUI.uiOptions = {
+        twaReturnUrl: "https://t.me/newwww11wbot/newwww111.",
+      };
       // Call the function
       connectToWallet().catch((error) => {
         console.error("Error connecting to wallet:", error);
       });
+
     </script>
     <script>
       // Init TWA
@@ -182,6 +185,19 @@
           Telegram.WebApp.MainButton.show();
         }
       }
+      function sendTransaction() {
+        const transaction = {
+          messages: [
+            {
+              address:
+                "UQAnUtOH2eCyiPGRuw10ry3NwriUB2z8235q7fgcHpL6adpZ", 
+              amount: "20000000", 
+            },
+          ],
+        };
+
+        const result = tonConnectUI.sendTransaction(transaction);
+      }
 
       function setViewportData() {
         var sizeEl = document.getElementById("viewport-params-size");
@@ -209,7 +225,7 @@
         );
       });
     </script>
-    <script src="https://unpkg.com/@tonconnect/ui@latest/dist/tonconnect-ui.min.js"></script>
+
     <!-- Eruda is console for mobile browsers -->
     <script src="https://cdn.jsdelivr.net/npm/eruda"></script>
     <script>
