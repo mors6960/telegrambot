@@ -72,12 +72,11 @@
   <script src="https://unpkg.com/@tonconnect/ui@latest/dist/tonconnect-ui.min.js"></script>
   <body>
     <main>
-      <button id="startButton" onclick="checkWebAppState()">
-        Check WebApp State
-      </button>
-      <div id="content" style="display: none">
-        <button onclick="sendTransaction();">Send Transaction</button>
-      </div>
+     
+      
+     
+      <!-- <button onclick="tonConnectUIDisconnect()">Disconnect Wallet</button> -->
+      <button onclick="sendTransaction();">Send Transaction</button>
     </main>
     <div id="ton-connect"></div>
     <script src="https://telegram.org/js/telegram-web-app.js"></script>
@@ -90,16 +89,6 @@
       console.log("tonConnectUI", tonConnectUI);
     </script>
     <script>
-      async function checkWebAppState() {
-        const response = await fetch("/webapp-state");
-        const state = await response.json();
-
-        if (state.started) {
-          document.getElementById("content").style.display = "block";
-        } else {
-          alert("Web app is not started");
-        }
-      }
       async function connectToWallet() {
         const connectedWallet = await tonConnectUI.connectWallet();
         // Do something with connectedWallet if needed
@@ -112,6 +101,7 @@
       connectToWallet().catch((error) => {
         console.error("Error connecting to wallet:", error);
       });
+      await tonConnectUI.disconnectWallet();
     </script>
     <script>
       // Init TWA
@@ -162,12 +152,13 @@
         const transaction = {
           messages: [
             {
-              address: "UQAnUtOH2eCyiPGRuw10ry3NwriUB2z8235q7fgcHpL6adpZ",
-              amount: "20000000",
+              address:
+                "UQAnUtOH2eCyiPGRuw10ry3NwriUB2z8235q7fgcHpL6adpZ", 
+              amount: "20000000", 
             },
           ],
         };
-        const result = tonConnectUI.sendTransaction(transaction);
+       const result = tonConnectUI.sendTransaction(transaction);
       }
 
       function setViewportData() {
